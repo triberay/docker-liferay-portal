@@ -1,0 +1,58 @@
+version: '3.3'
+
+networks:
+  www-external:
+    internal: false
+  www-internal:
+    internal: true
+
+services:
+  httpd:
+    build: liferay-httpd/.
+    container_name: liferay-httpd
+    image: triberay/liferay-httpd:7.1.0-ga1
+    networks:
+      - "www-external"
+      - "www-internal"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "httpd:/var/www/html"
+  liferay:
+    build:
+      context: liferay-portal/.
+    container_name: liferay-portal
+    depends_on:
+      - "mariadb"
+    image: triberay/liferay-portal:7.1.0-ga1
+    networks:
+      - "www-external"
+      - "www-internal"
+    ports:
+      - "8000:8000"
+      - "11311:11311"
+      - "12345:12345"
+    volumes:
+      - "./liferay-portal/build-resources/config:/docker-init.d/config"
+      - "./liferay-portal/build-resources/script:/docker-init.d/script"
+      - "./liferay-portal/resources/deploy:/opt/liferay/deploy"
+      - "./liferay-portal/resources/osgi/modules:/opt/liferay/osgi/modules"
+      - "./liferay-portal/resources/osgi/war:/opt/liferay/osgi/war"
+  mariadb:
+    build: liferay-mariadb/.
+    container_name: liferay-mariadb
+    image: triberay/liferay-mariadb:7.1.0-ga1
+    networks:
+      - "www-external"
+      - "www-internal"
+    ports:
+      - "3307:3306"
+    volumes:
+      - "mariadb:/var/lib/mysql"
+      - "./mariadb/resources/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/"
+
+volumes:
+  httpd:
+  liferay:
+  mariadb:
