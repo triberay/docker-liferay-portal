@@ -7,6 +7,14 @@ networks:
     internal: true
 
 services:
+  elasticsearch:
+    image: triberay/elasticsearch-4-liferay:7.1.0-ga1
+    networks:
+      - "www-external"
+      - "www-internal"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   httpd:
     image: triberay/httpd-4-liferay:7.1.0-ga1
     networks:
@@ -15,8 +23,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - "httpd:/var/www/html"
   liferay:
     build: .
     container_name: liferay-portal
@@ -31,11 +37,11 @@ services:
       - "11311:11311"
       - "12345:12345"
     volumes:
-      - "./liferay-portal/build-resources/config:/docker-init.d/config"
-      - "./liferay-portal/build-resources/script:/docker-init.d/script"
-      - "./liferay-portal/resources/deploy:/opt/liferay/deploy"
-      - "./liferay-portal/resources/osgi/modules:/opt/liferay/osgi/modules"
-      - "./liferay-portal/resources/osgi/war:/opt/liferay/osgi/war"
+      - "./build-resources/config:/docker-init.d/config"
+      - "./build-resources/script:/docker-init.d/script"
+      - "./resources/deploy:/opt/liferay/deploy"
+      - "./resources/osgi/modules:/opt/liferay/osgi/modules"
+      - "./resources/osgi/war:/opt/liferay/osgi/war"
   mariadb:
     image: triberay/mariadb-4-liferay:7.1.0-ga1
     networks:
@@ -43,11 +49,9 @@ services:
       - "www-internal"
     ports:
       - "3307:3306"
-    volumes:
-      - "mariadb:/var/lib/mysql"
-      - "./mariadb/resources/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/"
 
 volumes:
+  elasticsearch:
   httpd:
   liferay:
   mariadb:
