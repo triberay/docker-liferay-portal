@@ -15,6 +15,12 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx2048m -Xms2048m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
   httpd:
     image: triberay/httpd-4-liferay:7.1.0-ga1
     networks:
@@ -36,6 +42,11 @@ services:
       - "8000:8000"
       - "11311:11311"
       - "12345:12345"
+    environment:
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_lass_UPPERCASEN_ame=org.mariadb.jdbc.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mariadb://mariadb/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=liferay
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=passw0rd
     volumes:
       - "./build-resources/config:/docker-init.d/config"
       - "./build-resources/script:/docker-init.d/script"
