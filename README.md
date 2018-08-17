@@ -3,7 +3,7 @@ a set of docker images optimised for development within a Liferay workspace
 
 ## Dependencies
 
-this [triberay/liferay-portal](https://hub.docker.com/r/triberay/liferay-portal/) images depends on the following extra images:
+[triberay/liferay-portal](https://hub.docker.com/r/triberay/liferay-portal/) depends on the following extra images:
  * [httpd-4-liferay](https://hub.docker.com/r/triberay/httpd-4-liferay/)
  * [mariadb-4-liferay](https://hub.docker.com/r/triberay/mariadb-4-liferay/)
  * [elasticsearch-4-liferay](https://hub.docker.com/r/triberay/elasticsearch-4-liferay/)
