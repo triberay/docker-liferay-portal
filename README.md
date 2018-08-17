@@ -1,2 +1,2 @@
 # docker-liferay-portal
-docker image for Liferay development
+docker setup for Liferay development
