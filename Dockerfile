@@ -13,4 +13,4 @@ USER liferay:liferay
 
 RUN mkdir -p /tmp/themes && chown -R liferay:liferay /tmp/themes
 COPY --chown=liferay:liferay ./resources/ ${LIFERAY_HOME}/
-COPY ./build-resources/portal-docker.properties $CATALINA_HOME/webapps/ROOT/WEB-INF/classes/portal-docker.properties
+COPY --chown=liferay:liferay ./build-resources/portal-*.properties $CATALINA_HOME/webapps/ROOT/WEB-INF/classes/
