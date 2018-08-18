@@ -15,8 +15,6 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xmx2048m -Xms2048m"
     ulimits:
       memlock:
         soft: -1
