@@ -29,6 +29,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
+  mockmock:
+    image: triberay/mockmock-4-liferay:7.1.0-ga1
+    networks:
+      - "www-external"
+      - "www-internal"
+    expose:
+      - "25"
+    ports:
+      - "8282:8282"
   liferay:
     build: .
     container_name: liferay-portal
@@ -62,7 +71,4 @@ services:
       - "3307:3306"
 
 volumes:
-  elasticsearch:
-  httpd:
   liferay:
-  mariadb:
