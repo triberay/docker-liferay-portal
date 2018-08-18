@@ -8,7 +8,7 @@ networks:
 
 services:
   elasticsearch:
-    image: triberay/elasticsearch-4-liferay:7.1.0-ga1
+    image: triberay/elasticsearch-4-liferay
     networks:
       - "www-external"
       - "www-internal"
@@ -22,7 +22,7 @@ services:
         soft: -1
         hard: -1
   httpd:
-    image: triberay/httpd-4-liferay:7.1.0-ga1
+    image: triberay/httpd-4-liferay
     networks:
       - "www-external"
       - "www-internal"
@@ -30,7 +30,7 @@ services:
       - "80:80"
       - "443:443"
   mockmock:
-    image: triberay/mockmock-4-liferay:7.1.0-ga1
+    image: triberay/mockmock-4-liferay
     networks:
       - "www-external"
       - "www-internal"
@@ -63,7 +63,7 @@ services:
       - "./resources/osgi/modules:/opt/liferay/osgi/modules"
       - "./resources/osgi/war:/opt/liferay/osgi/war"
   mariadb:
-    image: triberay/mariadb-4-liferay:7.1.0-ga1
+    image: triberay/mariadb-4-liferay
     networks:
       - "www-external"
       - "www-internal"
