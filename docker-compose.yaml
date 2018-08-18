@@ -42,8 +42,7 @@ services:
     build: .
     container_name: liferay-portal
     depends_on:
-      - "httpd"
-      - "mariadb"
+      - "postgres"
     networks:
       - "www-external"
       - "www-internal"
@@ -52,8 +51,8 @@ services:
       - "11311:11311"
       - "12345:12345"
     environment:
-      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_lass_UPPERCASEN_ame=org.mariadb.jdbc.Driver
-      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mariadb://mariadb/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_lass_UPPERCASEN_ame=org.postgresql.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:postgresql://postgres:5432/lportal
       - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=liferay
       - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=passw0rd
     volumes:
@@ -62,13 +61,24 @@ services:
       - "./resources/deploy:/opt/liferay/deploy"
       - "./resources/osgi/modules:/opt/liferay/osgi/modules"
       - "./resources/osgi/war:/opt/liferay/osgi/war"
-  mariadb:
-    image: triberay/mariadb-4-liferay
+#  mariadb:
+#    image: triberay/mariadb-4-liferay
+#    networks:
+#      - "www-external"
+#      - "www-internal"
+#    ports:
+#      - "3307:3306"
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=passw0rd
+      - POSTGRES_USER=liferay
+      - POSTGRES_DB=lportal
     networks:
       - "www-external"
       - "www-internal"
     ports:
-      - "3307:3306"
+      - "5433:5432"
 
 volumes:
   liferay:
