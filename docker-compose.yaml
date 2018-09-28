@@ -40,6 +40,7 @@ services:
       - "8282:8282"
   liferay:
     build: .
+    image: triberay/liferay-portal
     container_name: liferay-portal
     depends_on:
       - "postgres"
@@ -61,13 +62,6 @@ services:
       - "./resources/deploy:/opt/liferay/deploy"
       - "./resources/osgi/modules:/opt/liferay/osgi/modules"
       - "./resources/osgi/war:/opt/liferay/osgi/war"
-#  mariadb:
-#    image: triberay/mariadb-4-liferay
-#    networks:
-#      - "www-external"
-#      - "www-internal"
-#    ports:
-#      - "3307:3306"
   postgres:
     image: postgres
     environment:
